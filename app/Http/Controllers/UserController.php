@@ -57,4 +57,10 @@ class UserController extends Controller {
     {
         return view('Pages.Dashboard');
     }
+
+    public function logOut()
+    {
+        session()->flush();
+        return redirect('/');
+    }
 }

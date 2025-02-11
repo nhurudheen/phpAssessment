@@ -94,30 +94,29 @@
                 <div class="p-4 grid gap-y-5">
                     <div class=" grid">
                         <p class="opacity-60">FullName:</p>
-                        <p class="font-montserrat">Faniyi Nurudeen
-                            Oluwapelumi</p>
+                        <p class="font-montserrat">{{ session('user.full_name')}}</p>
                     </div>
                     <div class=" grid">
                         <p class="opacity-60">Phone Number:</p>
-                        <p class="font-montserrat">7383838383</p>
+                        <p class="font-montserrat">{{session('user.phone_number')}}</p>
                     </div>
                     <div class=" grid">
                         <p class="opacity-60">Email Address:</p>
                         <p
-                            class="font-montserrat">ifaniyioluwapelumi@gmail.com</p>
+                            class="font-montserrat">{{session('user.email_address')}}</p>
                     </div>
                     <div class=" grid">
                         <p class="opacity-60">CV</p>
-                        <p class="font-montserrat text-sm">No file
-                            Available
-                            <span
-                                class="cursor-pointer bg-secondary rounded px-3 py-2"
-                                onClick>Upload
-                                            File</span>
-                        <p>SummeyLike.pdf</p>
-                        </p>
+                        <p class="font-montserrat text-sm">
+                            @if(session('user.cv') == "")
+                                No file available
+                                <span class="cursor-pointer bg-secondary rounded px-3 py-2" onClick>Upload CV</span>
+                        @else
+                            {{ session('user.cv') }}
+                            @endif
+                            </p>
                     </div>
-                    <button class="bg-secondary rounded py-3"
+                    <button class="bg-secondary rounded py-3 cursor-pointer"
                             onClick="toggleProfileModal()">Update
                         Record</button>
                 </div>
