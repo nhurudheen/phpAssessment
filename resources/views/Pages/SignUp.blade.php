@@ -8,7 +8,8 @@
                 <a href="/"><span class="opacity-80 text-secondary">Sign
                         In</span></a>
             </div>
-            <form class="p-4 grid gap-4" method="post" action={{ '/createAccount' }}>
+            <form class="p-4 grid gap-4" method="post" action={{ '/create-account' }}>
+                @csrf
                 <div>
                     <div class="grid">
                         <span class="text-sm font-normal mb-1 inline-flex items-start">
@@ -21,7 +22,7 @@
                         </div>
                     </div>
                     @error('full_name')
-                        <span class="text-red-500 text-[13px] transition-all">{{ message }}</span>
+                        <span class="text-red-500 text-[13px] transition-all">{{ $message }}</span>
                     @enderror
                 </div>
                 <div>
@@ -37,7 +38,7 @@
                         </div>
                     </div>
                     @error('phone_number')
-                        <span class="text-red-500 text-[13px] transition-all">{{ message }}</span>
+                        <span class="text-red-500 text-[13px] transition-all">{{ $message }}</span>
                     @enderror
                 </div>
                 <div>
@@ -52,7 +53,7 @@
                         </div>
                     </div>
                     @error('email_address')
-                        <span class="text-red-500 text-[13px] transition-all">{{ message }}</span>
+                        <span class="text-red-500 text-[13px] transition-all">{{ $message }}</span>
                     @enderror
                 </div>
                 <div>
@@ -73,7 +74,7 @@
                         </div>
                     </div>
                     @error('password')
-                        <span class="text-red-500 text-[13px] transition-all">{{ message }}</span>
+                        <span class="text-red-500 text-[13px] transition-all">{{ $message }}</span>
                     @enderror
                 </div>
                 <button type="submit" class="text-sm text-white bg-secondary rounded px-8 py-3 cursor-pointer">
