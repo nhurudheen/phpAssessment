@@ -7,7 +7,8 @@
                 Access Customer Records</p>
             <p class="text-sm font-montserrat opacity-50">Only
                 authenticated users can view customer records.</p>
-            <form>
+            <form method="post" action={{ '/sign-in' }}>
+                @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
                     <div>
                         <div class="grid">
@@ -15,12 +16,13 @@
                                 Address:</span>
                             <div class="relative">
                                 <input type="email"
-                                name="email_address"
-                                 name
+                                name="email_address" value="{{ old('email_address') }}"
                                     class="w-full p-3 rounded-md bg-[#ffffff04] outline-none hover:bg-[#ffffff08] border border-lightPrimary active:border-none focus:border-white placeholder:text-xs dark:bg-slate-800" />
                             </div>
                         </div>
-                        <span class="text-red-500 text-[13px] transition-all">error</span>
+                        @error('email_address')
+                        <span class="text-red-500 text-[13px] transition-all">{{$message}}</span>
+                        @enderror
                     </div>
                     <div>
                         <div class="grid">
@@ -29,14 +31,16 @@
                                 <div class="absolute top-0 h-full right-0 p-1 cursor-pointer" onClick="togglePassword()">
                                     <span
                                         class="aspect-square bg-lightPrimary rounded h-full flex items-center justify-center">
-                                        <img src="images/eyeIcon.svg" alt />
+                                        <img src="{{ asset('assets/images/eyeIcon.svg') }}" alt />
                                     </span>
                                 </div>
-                                <input type="password" id="passwordInput" placeholder name
+                                <input type="password" id="passwordInput" placeholder name ="password" value="{{ old('password') }}"
                                     class="w-full p-3 rounded-md bg-[#ffffff04] hover:bg-[#ffffff08] border border-lightPrimary active:border-none focus:border-white outline-none placeholder:text-xs dark:bg-slate-800" />
                             </div>
                         </div>
-                        <span class="text-red-500 text-[13px] transition-all">error</span>
+                        @error('password')
+                        <span class="text-red-500 text-[13px] transition-all">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <button type onClick="callToast()" class="text-sm text-white bg-secondary rounded px-8 py-3 cursor-pointer">
@@ -44,9 +48,8 @@
                 </button>
             </form>
             <div class="flex gap-3 text-sm mt-5">
-                <img src={caution} alt class="h-5" />
                 <span>Don't have an account, <span class="text-secondary"><a href="{{ route('signUp') }}">Create
-                            Account</span></a></span>
+                            Account</a></span>
             </div>
         </div>
         <div class="p-5 md:p-10">
@@ -55,3 +58,4 @@
         </div>
     </div>
 @endsection
+@extends('Utility.functions')

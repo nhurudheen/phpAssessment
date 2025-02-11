@@ -9,5 +9,6 @@ Route::controller( UserController::class )->group(
         Route::get( '/', 'index' )->name( 'index' );
         Route::get( '/signUp', 'signUp' )->name( 'signUp' );
         Route::post( '/create-account', 'createAccount' );
+        Route::post('/sign-in', 'signIn');
     }
 );
