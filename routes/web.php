@@ -8,6 +8,7 @@ Route::controller( UserController::class )->group(
     function () {
         Route::get( '/', 'index' )->name( 'index' );
         Route::get( '/signUp', 'signUp' )->name( 'signUp' );
+        Route::get('/dashboard', 'dashboard')->name('dashboard');
         Route::post( '/create-account', 'createAccount' );
         Route::post('/sign-in', 'signIn');
     }
