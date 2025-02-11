@@ -27,4 +27,12 @@ class SignInRequest extends FormRequest
             'password' => ['required', 'string']
         ];
     }
+
+    public function messages() : array
+    {
+        return[
+            'email_address.required' => 'Kindly enter your email address',
+            'password.required' => 'Kindly enter your password'
+        ];
+    }
 }
