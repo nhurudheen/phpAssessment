@@ -32,10 +32,15 @@
 <body class="font-outfit">
     <div id="toast-container" class="fixed top-5 right-5 space-y-2 z-50"></div>
     <div class="min-h-screen bg-primary">
-        <div class="h-[80px] border-b border-b-[#c4c4c416] bg-primary shadow-lg flex items-center px-4 md:px-10">
+        <div class="h-[80px] border-b border-b-[#c4c4c416] bg-primary shadow-lg flex items-center px-4 md:px-10 justify-between">
             <span class="text-xl lg:text-2xl font-semibold text-white">
                 PHP Developer Assessment Task
             </span>
+            @if(View::yieldContent('logOutButton'))
+            <div class="flex justify-end">
+                <a href="{{route('logOut')}}"><button class="bg-red-500 px-6 py-3 text-white rounded">LOG OUT</button></a>
+            </div>
+            @endif
         </div>
 
         <div class="text-white">

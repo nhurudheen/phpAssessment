@@ -28,13 +28,13 @@
                         <div class="grid">
                             <span class="text-sm font-normal mb-1">Password</span>
                             <div class="relative">
-                                <div class="absolute top-0 h-full right-0 p-1 cursor-pointer" onClick="togglePassword()">
+                                <div class="absolute top-0 h-full right-0 p-1 cursor-pointer" onClick="togglePasswordInput('xyz')">
                                     <span
                                         class="aspect-square bg-lightPrimary rounded h-full flex items-center justify-center">
                                         <img src="{{ asset('assets/images/eyeIcon.svg') }}" alt />
                                     </span>
                                 </div>
-                                <input type="password" id="passwordInput" placeholder name ="password" value="{{ old('password') }}"
+                                <input type="password" id="passwordInput_xyz" placeholder name ="password" value="{{ old('password') }}"
                                     class="w-full p-3 rounded-md bg-[#ffffff04] hover:bg-[#ffffff08] border border-lightPrimary active:border-none focus:border-white outline-none placeholder:text-xs dark:bg-slate-800" />
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                         @enderror
                     </div>
                 </div>
-                <button type onClick="callToast()" class="text-sm text-white bg-secondary rounded px-8 py-3 cursor-pointer">
+                <button type="submit" class="text-sm text-white bg-secondary rounded px-8 py-3 cursor-pointer">
                     Sign in
                 </button>
             </form>

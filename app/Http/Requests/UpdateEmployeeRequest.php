@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CreateEmployeeRequest extends FormRequest
+class UpdateEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,11 @@ class CreateEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'exists:employees,id',
             'full_name' => 'required|string',
-            'phone_number' => 'required|numeric|unique:employees,phone_number',
-            'email_address' => 'required|email|unique:employees,email_address',
-            'password' => 'required|min:6',
+            'phone_number' => 'required|numeric',
+            'email_address' => 'required|email',
+            'password' => 'nullable|min:6',
             'cv' => 'file|mimes:pdf,doc,docx|max:5048|nullable'
         ];
     }
@@ -36,12 +37,9 @@ class CreateEmployeeRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email_address.unique' => 'The email address already exists. Please use a different one.',
-            'phone_number.unique' => 'The phone number already exists. Please use a different one.',
-            'password.min' => 'The password must be at least 6 characters long.',
+            'id.exists' => 'Invalid Employee id.',
         ];
     }
-
     protected function failedValidation(Validator $validator): void
     {
         if ($this->expectsJson() || $this->isApiRequest()) {

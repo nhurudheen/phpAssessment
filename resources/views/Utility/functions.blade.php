@@ -1,14 +1,27 @@
 <script type="text/javascript">
-    function togglePassword() {
-        const passwordInput = document.getElementById("passwordInput");
-        const toggleIcon = document.getElementById("toggleIcon");
 
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            toggleIcon.src = "images/eyeOffIcon.svg";
+    function toggleProfileModal() {
+        const modal = document.getElementById("profileRecordModal");
+        modal.classList.toggle("hidden");
+    }
+
+    function toggleUpdateRecordModal(id) {
+        const modal = document.getElementById(`updateRecordModal_${id}`);
+        modal.classList.toggle("hidden");
+    }
+
+    function toggleDeleteModal(id) {
+        const modal = document.getElementById(`deleteRecordModal_${id}`);
+        modal.classList.toggle("hidden");
+    }
+
+    function togglePasswordInput(id) {
+        const passwordInput = document.getElementById(`passwordInput_${id}`);
+        if (passwordInput) {
+            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
         } else {
-            passwordInput.type = "password";
-            toggleIcon.src = "images/eyeIcon.svg";
+            console.error(`Password input with ID passwordInput_${id} not found`);
         }
     }
+
 </script>

@@ -8,7 +8,7 @@
                 <a href="/"><span class="opacity-80 text-secondary">Sign
                         In</span></a>
             </div>
-            <form class="p-4 grid gap-4" method="post" action={{ '/create-account' }}>
+            <form class="p-4 grid gap-4" method="post" action={{ '/create-account' }} enctype="multipart/form-data">
                 @csrf
                 <div>
                     <div class="grid">
@@ -59,16 +59,31 @@
                 <div>
                     <div class="grid">
                         <span class="text-sm font-normal mb-1 inline-flex items-start">
+                            Upload CV
+                        </span>
+                        <div class="relative">
+                            <input type="file" name ="cv" value="{{ old('cv') }}"
+                                   class="w-full p-3 rounded-md bg-[#ffffff04] outline-none hover:bg-[#ffffff08] border border-lightPrimary active:border-none focus:border-white placeholder:text-xs dark:bg-slate-800" />
+                        </div>
+                    </div>
+                    @error('cv')
+                    <span class="text-red-500 text-[13px] transition-all">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <div class="grid">
+                        <span class="text-sm font-normal mb-1 inline-flex items-start">
                             Password
                             <code class="text-[10px] text-red-500 align-top">*</code>
                         </span>
                         <div class="relative">
-                            <div class="absolute top-0 h-full right-0 p-1 cursor-pointer" onClick="togglePassword()">
+                            <div class="absolute top-0 h-full right-0 p-1 cursor-pointer" onClick="togglePasswordInput('xyz')">
                                 <span class="aspect-square bg-lightPrimary rounded h-full flex items-center justify-center">
                                     <img src="{{ asset('assets/images/eyeIcon.svg') }}" alt />
                                 </span>
                             </div>
-                            <input type="password" id="passwordInput" placeholder name="password"
+                            <input type="password" id="passwordInput_xyz" placeholder name="password"
                                 value="{{ old('password') }}"
                                 class="w-full p-3 rounded-md bg-[#ffffff04] hover:bg-[#ffffff08] border border-lightPrimary active:border-none focus:border-white outline-none placeholder:text-xs dark:bg-slate-800" />
                         </div>
@@ -77,6 +92,7 @@
                         <span class="text-red-500 text-[13px] transition-all">{{ $message }}</span>
                     @enderror
                 </div>
+
                 <button type="submit" class="text-sm text-white bg-secondary rounded px-8 py-3 cursor-pointer">
                     Create Account
                 </button>
