@@ -6,6 +6,7 @@ use App\Http\Requests\CreateEmployeeRequest;
 use App\Http\Requests\SignInRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
+use App\Services\EmployeeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -24,18 +25,8 @@ class UserController extends Controller {
     {
         try {
             $data = $request->validated();
-            if ($request->hasFile('cv')) {
-                $file = $request->file('cv');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = 'assets/documents';
-                $file->move(public_path($filePath), $fileName);
-                $data['cv'] = $filePath . '/' . $fileName;
-            }
-            $data['password'] = Hash::make($data['password']);
-            Employee::create($data);
+            EmployeeService::createEmployee($data);
             return redirect()->route('index')->with('success', 'Employee Created Successfully');
-        } catch (ValidationException $e) {
-            return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             return back()->with('error', 'An error occurred. Please try again.')->withInput();
         }
@@ -53,9 +44,6 @@ class UserController extends Controller {
             else{
                 return back()->with('error', 'Invalid Credentials')->withInput();
             }
-        }
-        catch (ValidationException $e) {
-            return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             return back()->with('error', 'An error occurred. Please try again.')->withInput();
         }
@@ -72,36 +60,15 @@ class UserController extends Controller {
     {
         try{
             $data = $request->validated();
-            $employee = Employee::findOrFail($data['id']);
-
-            $employee->full_name = $data['full_name'] ?? $employee->full_name;
-            $employee->email_address = $data['email_address'] ?? $employee->email_address;
-            $employee->phone_number = $data['phone_number'] ?? $employee->phone_number;
-            if (!empty($data['password'])) {
-                $employee->password = Hash::make($data['password']);
-            }
-
-            if ($request->hasFile('cv')) {
-                if (!empty($employee->cv) && file_exists(public_path($employee->cv))) {
-                    unlink(public_path($employee->cv));
-                }
-                $file = $request->file('cv');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = 'assets/documents';
-                $file->move(public_path($filePath), $fileName);
-                $employee->cv = $filePath . '/' . $fileName;
-            }
-            $employee->save();
+            EmployeeService::updateEmployee($data);
             return redirect()->route('dashboard')->with('success', 'Employee record updated successfully.');
-        }
-        catch (ValidationException $e) {
-            return back()->withErrors($e->errors())->withInput()->with('error','Validation Failed');
         } catch (\Exception $e) {
-            return back()->with('error', 'An error occurred. Please try again.')->withInput();
+            return back()->with('error', $e->getMessage())->withInput();
         }
     }
 
-    public function deleteRecord($id) {
+    public function deleteRecord($id)
+    {
         Employee::find($id)->delete();
         $route = ($id == Session::get('user.id')) ? 'logOut' : 'dashboard';
         return redirect()->route($route)->with('success', 'Employee record deleted successfully.');
