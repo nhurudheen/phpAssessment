@@ -69,6 +69,7 @@
                                     </td>
                                     <td
                                         class="text-start py-5 ps-6 flex gap-2">
+
                                         <button
                                             class="text-sm text-white bg-secondary rounded p-3 cursor-pointer" onclick="toggleUpdateRecordModal( '{{ $data->id }}')">
                                             <img src ="{{ asset('assets/images/pencil.svg') }}"/>
@@ -77,6 +78,13 @@
                                             class="text-sm text-white bg-red-500 rounded p-3 cursor-pointer mr-2" onclick="toggleDeleteModal( '{{ $data->id }}')">
                                             <img src ="{{ asset('assets/images/bin.svg') }}"/>
                                         </button>
+                                        @if(!empty($data->cv))
+                                            <a href="{{asset($data->cv)}}" target="_blank">
+                                                <button
+                                                    class="text-sm text-white bg-secondary/50 rounded p-3 cursor-pointer">
+                                                    <img src ="{{ asset('assets/images/file.svg') }}"/>
+                                                </button></a>
+                                        @endif
                                     </td>
                                 @include('Modals.UpdateRecordModal')
                                     @include('Modals.DeleteEmployeeModal')
@@ -111,13 +119,14 @@
                     </div>
                     <div class=" grid">
                         <p class="opacity-60">CV</p>
-                        <p class="font-montserrat text-sm">
+                        <div class="font-montserrat text-sm flex justify-between items-center gap-x-2 truncate">
                                 @if(empty($personalRecord->cv))
                                     No file available
                                 @else
-                                    {{ $personalRecord->cv }}
+                                    <p class="truncate">{{ basename($personalRecord->cv) }}</p>
+                                <a href="{{asset($personalRecord->cv)}}" target="_blank"> <button class="px-3 py-2 bg-secondary/60 text-white rounded cursor-pointer">View</button></a>
                                 @endif
-                            </p>
+                            </div>
                     </div>
                     <button class="bg-secondary rounded py-3 cursor-pointer"
                             onClick="toggleProfileModal()">Update
